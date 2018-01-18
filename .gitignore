@@ -1,0 +1,4 @@
+#mac Stuff
+.DS_store
+#ignor node module
+node_modules/
