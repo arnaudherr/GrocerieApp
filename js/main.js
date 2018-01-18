@@ -1,47 +1,43 @@
-$(function() {
-  var availableTags = [
-    "ActionScript",
-    "AppleScript",
-    "Asp",
-    "BASIC",
-    "C",
-    "C++",
-    "Clojure",
-    "COBOL",
-    "ColdFusion",
-    "Erlang",
-    "Fortran",
-    "Groovy",
-    "Haskell",
-    "Java",
-    "JavaScript",
-    "Lisp",
-    "Perl",
-    "PHP",
-    "Python",
-    "Ruby",
-    "Scala",
-    "Scheme"
-  ];
-    $("#add__item").autocomplete({
-        source: availableTags,
-        minLength: 1,
-        select: function(event, ui) {
-            var url = ui.item.id;
-            if(url != '#') {
-                location.href = '/blog/' + url;
-            }
-        },
+function Autocomplete(){
+  var availableTags = [];
 
-        html: true, // optional (jquery.ui.autocomplete.html.js required)
-
-      // optional (if other layers overlap autocomplete list)
-        open: function(event, ui) {
-            $(".ui-autocomplete").css("z-index", 1000);
+  $(function() {
+    $.ajax({    //create an ajax request to display.php
+        type: "GET",
+        url: "allArticles.php",
+        dataType: "json",   //expect html to be returned
+        success: function(response){
+          console.log(response.length);
+          for (var i = 0; i < response.length; i++) {
+          availableTags.push(String(response[i].name))
+          }
+            //alert(response);
         }
-    });
 
-});
+    });
+      $("#add__item").autocomplete({
+          source: availableTags,
+          minLength: 1,
+          select: function(event, ui) {
+              var url = ui.item.id;
+              //instert into list
+          },
+
+          html: true, // optional (jquery.ui.autocomplete.html.js required)
+
+        // optional (if other layers overlap autocomplete list)
+          open: function(event, ui) {
+              $(".ui-autocomplete").css("z-index", 1000);
+          }
+      });
+      $( ".add__item" ).on( "autocompletechange", function( event, ui ) {
+        console.log('change')
+      } );
+
+
+  });
+
+}
 
 google.charts.load('current', {'packages':['corechart']});
      google.charts.setOnLoadCallback(drawChart);

@@ -38,7 +38,7 @@ app.controller("list__controller", function($scope, $http) {
 		$scope.selectedItemChanged = function(item) {
 			$scope.productsUncompleted = [];
 			$scope.productsCompleted = [];
-
+      Autocomplete();
 			$http.get('articles.php', {
 				params: {
 					list_id: item.id

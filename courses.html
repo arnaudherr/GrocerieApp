@@ -1,7 +1,7 @@
 <h1>Hi <span class="name">John</span></h1>
 <div class="container__header" ng-app="add__list">
   <select id ="select_list"  ng-options='item.name for item in list' ng-model="selectedItem" ng-change="selectedItemChanged(selectedItem)">
-    <option value="">Select List</option>
+    <option value="" data-id="">Select List</option>
   </select>
   <button ng-click=addList()><p>+</p></button>
   <div class="popupList"><svg ng-click="hideListForm()" id="popupList__hide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>
@@ -12,11 +12,11 @@
 </div>
 <div class="container__currentList articles" ng-app="show__list">
 
-  <input type='text' id="add__item" placeholder="add new item">
+  <input ng-if="selectedItem" type='text' id="add__item" placeholder="add new item">
 
   <ul class="articles__list">
     <h1>{{selectedItem.name}}</H1>
-    <p>You have still <span class="count">{{stillWaiting}}</span> uncompleted list</p>
+    <p ng-if="selectedItem">You have still <span class="count">{{stillWaiting}}</span> uncompleted list</p>
 
     <li class="articles__list--item control-group" ng-repeat="product in productsUncompleted">
       <label class="control control-checkbox">
@@ -31,7 +31,7 @@
 </div>
 <div class="container__currentList articles" ng-app="show__list">
 
-  <p>Current Articles <span class="count">{{completed}}</span> &#9658</p>
+  <p ng-if="selectedItem">Current Articles <span class="count">{{completed}}</span> &#9658</p>
   <ul class="articles__list">
     <li class="articles__list--curent" ng-repeat="x in productsCompleted "><label class="control control-checkbox">
         <p>{{x.name}}</p>
