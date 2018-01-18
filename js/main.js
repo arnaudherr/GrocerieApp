@@ -1,8 +1,47 @@
+$(function() {
+  var availableTags = [
+    "ActionScript",
+    "AppleScript",
+    "Asp",
+    "BASIC",
+    "C",
+    "C++",
+    "Clojure",
+    "COBOL",
+    "ColdFusion",
+    "Erlang",
+    "Fortran",
+    "Groovy",
+    "Haskell",
+    "Java",
+    "JavaScript",
+    "Lisp",
+    "Perl",
+    "PHP",
+    "Python",
+    "Ruby",
+    "Scala",
+    "Scheme"
+  ];
+    $("#add__item").autocomplete({
+        source: availableTags,
+        minLength: 1,
+        select: function(event, ui) {
+            var url = ui.item.id;
+            if(url != '#') {
+                location.href = '/blog/' + url;
+            }
+        },
 
+        html: true, // optional (jquery.ui.autocomplete.html.js required)
 
+      // optional (if other layers overlap autocomplete list)
+        open: function(event, ui) {
+            $(".ui-autocomplete").css("z-index", 1000);
+        }
+    });
 
-
-
+});
 
 google.charts.load('current', {'packages':['corechart']});
      google.charts.setOnLoadCallback(drawChart);

@@ -3,25 +3,41 @@
   <select id ="select_list"  ng-options='item.name for item in list' ng-model="selectedItem" ng-change="selectedItemChanged(selectedItem)">
     <option value="">Select List</option>
   </select>
-  <button><p>+</p></button>
+  <button ng-click=addList()><p>+</p></button>
+  <div class="popupList"><svg ng-click="hideListForm()" id="popupList__hide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>
+    <input ng-init="inputVal=''" ng-model="inputVal" type="text" autofocus/>
+    <button class="submit" ng-click="addItem(inputVal)">Add</button>
 
+</div>
 </div>
 <div class="container__currentList articles" ng-app="show__list">
 
   <input type='text' id="add__item" placeholder="add new item">
+
   <ul class="articles__list">
     <h1>{{selectedItem.name}}</H1>
     <p>You have still <span class="count">{{stillWaiting}}</span> uncompleted list</p>
 
-    <li class="articles__list--item control-group" ng-repeat="x in productsUncompleted">
+    <li class="articles__list--item control-group" ng-repeat="product in productsUncompleted">
       <label class="control control-checkbox">
-            <input type="checkbox"  data-id=""/>
+            <input type="checkbox"  data-id=""  ng-click="removeItem($index)"/>
             <div class="control_indicator"></div>
-            <h3>{{x.name}}</h3>
-            <p>find {{x.name}} at <button ng-click="showMap(x.idRayon)" class="map__link" href="#" class="{{x.idRayon}}">{{x.categorieName}}</button></p>
+            <h3>{{product.name}}</h3>
+            <p>find {{product.name}} at <button ng-click="showMap(product.idRayon)" class="map__link" href="#" class="{{product.idRayon}}">{{product.categorieName}}</button></p>
             <div class="popupPrice" data-id=""><h1>Set price</h1><input type="number" min="0.00" max="10000.00" step="0.01" /></div>
       </label>
     </li>
+  </ul>
+</div>
+<div class="container__currentList articles" ng-app="show__list">
+
+  <p>Current Articles <span class="count">{{completed}}</span> &#9658</p>
+  <ul class="articles__list">
+    <li class="articles__list--curent" ng-repeat="x in productsCompleted "><label class="control control-checkbox">
+        <p>{{x.name}}</p>
+            <input type="checkbox" checked="checked" />
+        <div class="control_indicator"></div>
+    </label></div></li>
   </ul>
 </div>
 <div class="map__rayon">
