@@ -31,7 +31,7 @@ app.controller("list__controller", function($scope, $http) {
 
 	$scope.list = [];
 	$scope.loadData = function() {
-		$http.get("getList.php")
+		$http.get("php/getList.php")
 			.then(function(response) {
 				$scope.list = response.data;
 			});
@@ -39,7 +39,7 @@ app.controller("list__controller", function($scope, $http) {
 			$scope.productsUncompleted = [];
 			$scope.productsCompleted = [];
       Autocomplete();
-			$http.get('articles.php', {
+			$http.get('php/articles.php', {
 				params: {
 					list_id: item.id
 				}
@@ -47,10 +47,9 @@ app.controller("list__controller", function($scope, $http) {
 				var obj = response.data;
 				console.log(obj.length)
 				$('html, body').animate({
-					scrollTop: $('#add__item').offset().top - 32
+					scrollTop: $('.articles__list h1').offset().top - 32
 				}, 'slow');
 				for (var i = 0; i < obj.length; i++) {
-					console.log(response.data[i])
 					if (response.data[i].status === "0") {
 						$scope.productsUncompleted.push(response.data[i]);
 
@@ -64,7 +63,11 @@ app.controller("list__controller", function($scope, $http) {
 				})
 				$scope.stillWaiting = $scope.productsUncompleted.length;
 				$scope.completed = $scope.productsCompleted.length;
+        console.log('stil waiting= '+$scope.stillWaiting);
+        if ($scope.stillWaiting===0){
+          alert('fini');
 
+        }
 
 			})
 		}
@@ -78,7 +81,7 @@ app.controller("list__controller", function($scope, $http) {
 	$scope.addItem = function(content) {
 		alert(content);
 		//insert into db new list
-		$http.get('creatList.php', {
+		$http.get('php/creatList.php', {
 			params: {
 				listeName: content
 			}
@@ -91,20 +94,32 @@ app.controller("list__controller", function($scope, $http) {
 		//***//
 		$scope.hideListForm();
 	}
+  $scope.updatePrice =function(newPrice,idListe){
+    console.log(idListe)
+    console.log(newPrice)
+    /***
+    update into db price of liste
+    **/
+    $http.get('php/updateListe.php', {
+			params: {
+        list_id: idListe,
+        newPrice: newPrice
+			}
+		}).then(function(response) {
+		})
+  }
+
 
 	$scope.removeItem = function(index) {
 		//remove completed element
-		console.log(index);
 		var currentListId = $scope.productsUncompleted[index].listeId;
 		var productToRemoveIntoList = $scope.productsUncompleted[index].idProduit
-		console.log(currentListId + " " + productToRemoveIntoList)
-		$http.get('removeArticles.php', {
+		$http.get('php/removeArticles.php', {
 			params: {
 				list_id: currentListId,
 				idproduit: productToRemoveIntoList
 			}
 		}).then(function(response) {
-			console.log(response)
 		})
 		$scope.productsCompleted.push($scope.productsUncompleted[index])
 		$scope.productsUncompleted.splice(index, 1);
@@ -113,6 +128,7 @@ app.controller("list__controller", function($scope, $http) {
 
 		$scope.stillWaiting = $scope.productsUncompleted.length;
 		$scope.completed = $scope.productsCompleted.length;
+
 
 
 

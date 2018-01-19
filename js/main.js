@@ -1,5 +1,5 @@
 function Autocomplete(){
-  var availableTags = [];
+/*  var availableTags = [];
 
   $(function() {
     $.ajax({    //create an ajax request to display.php
@@ -35,11 +35,12 @@ function Autocomplete(){
       } );
 
 
-  });
+  });*/
 
 }
 
-google.charts.load('current', {'packages':['corechart']});
+
+google.charts.load('current', {packages: ['corechart', 'line']});
      google.charts.setOnLoadCallback(drawChart);
 
      function drawChart() {
@@ -54,6 +55,8 @@ google.charts.load('current', {'packages':['corechart']});
        var options = {
          title: 'Dépences par mois',
          curveType: 'function',
+         pointSize: 4,
+
          legend: { position: 'none' },
          lineWidth: 2,
 

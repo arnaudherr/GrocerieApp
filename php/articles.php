@@ -1,7 +1,7 @@
 
 
 
-<?php require_once ('DB/dbcontroller.php');
+<?php require_once ('../DB/dbcontroller.php');
 
 $id=$_GET["list_id"];
 $db_handle = new DBController();

@@ -1,5 +1,5 @@
 
-<?php require_once ('DB/dbcontroller.php');
+<?php require_once ('../DB/dbcontroller.php');
 
 $idListe=$_GET["list_id"];
 $idProduit=$_GET['idproduit'];

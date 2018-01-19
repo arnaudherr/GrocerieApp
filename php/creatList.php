@@ -1,4 +1,4 @@
-<?php require_once ('DB/dbcontroller.php');
+<?php require_once ('../DB/dbcontroller.php');
 
 $name=$_GET['listeName'];
 echo $name;

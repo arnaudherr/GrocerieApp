@@ -10,13 +10,20 @@
 
 </div>
 </div>
-<div class="container__currentList articles" ng-app="show__list">
+<div class="container__currentList articles" ng-if="selectedItem" ng-app="show__list">
 
-  <input ng-if="selectedItem" type='text' id="add__item" placeholder="add new item">
 
   <ul class="articles__list">
     <h1>{{selectedItem.name}}</H1>
     <p ng-if="selectedItem">You have still <span class="count">{{stillWaiting}}</span> uncompleted list</p>
+    <div ng-if="stillWaiting!=0" class="container__addElement">
+    <input ng-if="stillWaiting!=0" ng-model="insertItem" type='text' id="add__item" placeholder="add new item">
+    <select ng-if="stillWaiting!=0">
+      <option value="" data-id="" ng-options='item.name for item in list' ng-model="selectedItem" ng-change="selectedItemChanged(selectedItem)">Select Categories</option>
+    </select>
+    <button ng-if="stillWaiting" class="submit big" >ADD</button>
+  </div>
+  <input class="setPrice" ng-if="stillWaiting===0" ng-model="newPrice" value="{{selectedItem.price}}"  ng-change="updatePrice(newPrice,selectedItem.id)" type="number" min="0.00" max="10000.00" step="0.01" placeholder="set the price"/>
 
     <li class="articles__list--item control-group" ng-repeat="product in productsUncompleted">
       <label class="control control-checkbox">
@@ -29,9 +36,9 @@
     </li>
   </ul>
 </div>
-<div class="container__currentList articles" ng-app="show__list">
+<div class="container__currentList articles" ng-if="selectedItem" ng-app="show__list">
 
-  <p ng-if="selectedItem">Current Articles <span class="count">{{completed}}</span> &#9658</p>
+  <p>Current Articles <span class="count">{{completed}}</span> &#9658;</p>
   <ul class="articles__list">
     <li class="articles__list--curent" ng-repeat="x in productsCompleted "><label class="control control-checkbox">
         <p>{{x.name}}</p>
