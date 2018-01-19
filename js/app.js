@@ -76,6 +76,42 @@ app.controller("list__controller", function($scope, $http) {
 	//call to $scope.loadData()
 	$scope.loadData();
 
+  $scope.verificationExist=function(value){
+    $http.get('php/allArticles.php', {
+      params: {
+        name: value
+      }
+    }).then(function(response) {
+      console.log(response.data[0].name)
+      if (response.data[0].name!=null){
+        $('#insert').hide();
+
+        //Insert into db onli in listProduit
+      }
+      else {
+        $('#insert').show();
+        //Insert into db  in listProduit and Produits
+
+      }
+    })
+  }
+  $scope.insertNewItemInList=function(idList,productName,rayon){
+    console.log(idList +" "+ productName +" "+ rayon);
+
+  }
+  $scope.getCatId=function(catId){
+    console.log(catId);
+    $scope.catid=catId;
+  }
+  $scope.listCategories=[];
+  $scope.loadCat=function(){
+
+  }
+  $http.get("php/getCategories.php")
+    .then(function(response) {
+      $scope.listCategories = response.data;
+      console.log(response.data);
+    });
 
 
 	$scope.addItem = function(content) {

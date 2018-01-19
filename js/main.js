@@ -1,10 +1,10 @@
 function Autocomplete(){
-/*  var availableTags = [];
+  var availableTags = [];
 
   $(function() {
     $.ajax({    //create an ajax request to display.php
         type: "GET",
-        url: "allArticles.php",
+        url: "php/allArticles.php",
         dataType: "json",   //expect html to be returned
         success: function(response){
           console.log(response.length);
@@ -21,6 +21,8 @@ function Autocomplete(){
           select: function(event, ui) {
               var url = ui.item.id;
               //instert into list
+              console.log(event);
+
           },
 
           html: true, // optional (jquery.ui.autocomplete.html.js required)
@@ -35,7 +37,7 @@ function Autocomplete(){
       } );
 
 
-  });*/
+  });
 
 }
 
