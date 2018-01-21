@@ -4,7 +4,7 @@
 $idListe=$_GET["list_id"];
 $prix=$_GET['newPrice'];
 $db_handle = new DBController();
-
-$query = "UPDATE  Liste SET price= $prix WHERE id=$idListe";
+$date = date('Y/m/d h:i:s a');
+$query = "UPDATE  Liste SET price= '$prix', status=1, enddate='$date'WHERE id='$idListe'";
 $content = $db_handle->updateQuery($query);
-echo json_encode($content);
+echo $date;

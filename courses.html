@@ -1,4 +1,5 @@
-<h1>Hi <span class="name">John</span></h1>
+<div class="container__controller" ng-controller="list__controller">
+  <h1>Hi <span class="name">John</span></h1>
 <div class="container__header" ng-app="add__list">
 <select id ="select_list"  ng-options='item.name for item in list' ng-model="selectedItem" ng-change="selectedItemChanged(selectedItem)">
   <option value="" data-id="">Select List</option>
@@ -12,28 +13,28 @@
 <div class="container__currentList articles" ng-if="selectedItem" ng-app="show__list">
 <ul class="articles__list">
   <h1>{{selectedItem.name}}</H1>
-  <p ng-if="selectedItem">You have still <span class="count">{{stillWaiting}}</span> uncompleted list</p>
-  <div ng-if="stillWaiting!=0" class="container__addElement">
+  <p class="stillWaiting" ng-if="selectedItem">You have still <span class="count">{{stillWaiting}}</span> uncompleted list</p>
+  <div  class="container__addElement">
   <input  ng-model="insertItem" ng-change="verificationExist(insertItem)" type='text' id="add__item" placeholder="add new item">
-  <select ng-if="stillWaiting!=0 && hideCategorieSelector===false " id="insert" ng-options='item.categorieName for item in listCategories' ng-model="getCat" ng-change=getCatId(getCat.id)>
+  <select  id="insert"  ng-if="hideCategorieSelector===false" ng-options='item.categorieName for item in listCategories' ng-model="getCat" ng-change=getCatId(getCat.id)>
     <option value="">Select Categories</option>
   </select>
-  <button ng-if="catid && insertItem" class="submit big" ng-click="insertNewItemInList(selectedItem.id,insertItem,exisitngProductId,catid)">ADD {{catid}}</button>
+  <button  class="submit big" ng-click="insertNewItemInList(selectedItem.id,insertItem,exisitngProductId,catid)">ADD</button>
 </div>
-<input class="setPrice" ng-if="stillWaiting===0" ng-model="newPrice" value="{{selectedItem.price}}"  ng-change="updatePrice(newPrice,selectedItem.id)" type="number" min="0.00" max="10000.00" step="0.01" placeholder="set the price"/>
+<p class="stillWaiting" ng-if="stillWaiting===0">Insert the price if you have finished</p>
+<input class="setPrice" ng-if="stillWaiting===0" ng-model="newPrice"   ng-change="updatePrice(newPrice,selectedItem.id)" type="number" min="0.00" max="10000.00" step="0.01" placeholder="set the price"/>
 
   <li class="articles__list--item control-group" ng-repeat="product in productsUncompleted">
     <label class="control control-checkbox">
-          <input type="checkbox"  data-id=""  ng-click="removeItem($index)"/>
-          <div class="control_indicator"></div>
-          <h3>{{product.name}}</h3>
-          <p>find {{product.name}} at <button ng-click="showMap(product.idRayon)" class="map__link" href="#" class="{{product.idRayon}}">{{product.categorieName}}</button></p>
-          <div class="popupPrice" data-id=""><h1>Set price</h1><input type="number" min="0.00" max="10000.00" step="0.01" /></div>
+          <input type="checkbox"  data-id=""/>
+          <div class="control_indicator" ng-click="removeItem($index)"></div>
+          <h3 ng-click="removeItem($index)">{{product.name}}</h3>
+          <p>find {{product.name}} at <button ng-click="showMap(product.idRayon)" class="map__link" class="{{product.idRayon}}">{{product.categorieName}}</button></p>
     </label>
   </li>
 </ul>
 </div>
-<div class="container__currentList articles" ng-if="selectedItem" ng-app="show__list">
+<div class="container__currentList articles" ng-if="selectedItem">
 <p>Current Articles <span class="count">{{completed}}</span> &#9658;</p>
 <ul class="articles__list">
   <li class="articles__list--curent" ng-repeat="x in productsCompleted "><label class="control control-checkbox">
@@ -44,7 +45,7 @@
 </ul>
 </div>
 <div class="map__rayon">
-<svg ng-click="hideMap()" id="map__rayon--close" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>
+  <svg  id="map__rayon--close" width="24" height="24" viewBox="0 0 24 24"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>
 <svg width="860px" height="411px" viewBox="0 0 860 411" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 3.8.1 (29687) - http://www.bohemiancoding.com/sketch -->
     <title>map</title>
@@ -174,5 +175,4 @@
         </g>
     </g>
 </svg>
-</div>
 </div>
