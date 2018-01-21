@@ -1,0 +1,56 @@
+@-webkit-keyframes cligno {
+ 0%   { opacity: .5;}
+ 50% { opacity: 1;}
+ 100% { opacity: 1;}
+}
+@-moz-keyframes cligno {
+ 0%   { opacity: .5;}
+ 50% { opacity: 1;}
+ 100% { opacity: 1;}
+}
+@-o-keyframes cligno {
+ 0%   { opacity: .5;}
+ 50% { opacity: 1;}
+ 100% { opacity: 1;}
+}
+@keyframes cligno {
+ 0%   { opacity: .5;}
+ 50% { opacity: 1;}
+ 100% { opacity: 1;}
+}
+
+
+@-webkit-keyframes showIn {
+ 0%   { opacity: 0; display: block; transform: translateY(100%);}
+ 100% { opacity: 1; display: block; transform: translateY(0%);}
+}
+@-moz-keyframes showIn {
+ 0%   { opacity: 0; display: block; transform: translateY(100%);}
+ 100% { opacity: 1; display: block; transform: translateY(0%);}
+}
+@-o-keyframes showIn {
+ 0%   { opacity: 0; display: block; transform: translateY(100%);}
+ 100% { opacity: 1; display: block; transform: translateY(0%);}
+}
+@keyframes showIn {
+ 0%   { opacity: 0; display: block; transform: translateY(100%);}
+ 100% { opacity: 1; display: block; transform: translateY(0%);}
+}
+
+
+ @-webkit-keyframes showIn {
+  0%   { opacity: 0; transform: translateY(100%);}
+  100% { opacity: 1; transform: translateY(0%);}
+}
+@-moz-keyframes showIn {
+  0%   { opacity: 0; transform: translateY(100%);}
+  100% { opacity: 1; transform: translateY(0%);}
+}
+@-o-keyframes showIn {
+  0%   { opacity: 0; transform: translateY(100%);}
+  100% { opacity: 1; transform: translateY(0%);}
+}
+@keyframes showIn {
+  0%   { opacity: 0; transform: translateY(100%);}
+  100% { opacity: 1; transform: translateY(0%);}
+}

@@ -1,178 +1,178 @@
 <h1>Hi <span class="name">John</span></h1>
 <div class="container__header" ng-app="add__list">
-  <select id ="select_list"  ng-options='item.name for item in list' ng-model="selectedItem" ng-change="selectedItemChanged(selectedItem)">
-    <option value="" data-id="">Select List</option>
+<select id ="select_list"  ng-options='item.name for item in list' ng-model="selectedItem" ng-change="selectedItemChanged(selectedItem)">
+  <option value="" data-id="">Select List</option>
+</select>
+<button ng-click=addList()><p>+</p></button>
+<div class="popupList"><svg ng-click="hideListForm()" id="popupList__hide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>
+  <input ng-init="inputVal=''" ng-model="inputVal" type="text" autofocus/>
+  <button class="submit" ng-click="addItem(inputVal)">Add</button>
+</div>
+</div>
+<div class="container__currentList articles" ng-if="selectedItem" ng-app="show__list">
+<ul class="articles__list">
+  <h1>{{selectedItem.name}}</H1>
+  <p ng-if="selectedItem">You have still <span class="count">{{stillWaiting}}</span> uncompleted list</p>
+  <div ng-if="stillWaiting!=0" class="container__addElement">
+  <input  ng-model="insertItem" ng-change="verificationExist(insertItem)" type='text' id="add__item" placeholder="add new item">
+  <select ng-if="stillWaiting!=0 && hideCategorieSelector===false " id="insert" ng-options='item.categorieName for item in listCategories' ng-model="getCat" ng-change=getCatId(getCat.id)>
+    <option value="">Select Categories</option>
   </select>
-  <button ng-click=addList()><p>+</p></button>
-  <div class="popupList"><svg ng-click="hideListForm()" id="popupList__hide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>
-    <input ng-init="inputVal=''" ng-model="inputVal" type="text" autofocus/>
-    <button class="submit" ng-click="addItem(inputVal)">Add</button>
+  <button ng-if="catid && insertItem" class="submit big" ng-click="insertNewItemInList(selectedItem.id,insertItem,exisitngProductId,catid)">ADD {{catid}}</button>
 </div>
-</div>
-<div class="container__currentList articles" ng-if="selectedItem" ng-app="show__list">
-  <ul class="articles__list">
-    <h1>{{selectedItem.name}}</H1>
-    <p ng-if="selectedItem">You have still <span class="count">{{stillWaiting}}</span> uncompleted list</p>
-    <div ng-if="stillWaiting!=0" class="container__addElement">
-    <input  ng-model="insertItem" ng-change="verificationExist(insertItem)" type='text' id="add__item" placeholder="add new item">
-    <select ng-if="stillWaiting!=0" id="insert" ng-options='item.categorieName for item in listCategories' ng-model="getCat" ng-change=getCatId(getCat.id)>
-      <option value="">Select Categories</option>
-    </select>
-    <button ng-if="stillWaiting" class="submit big" ng-click="insertNewItemInList(selectedItem.id,insertItem,catid)">ADD</button>
-  </div>
-  <input class="setPrice" ng-if="stillWaiting===0" ng-model="newPrice" value="{{selectedItem.price}}"  ng-change="updatePrice(newPrice,selectedItem.id)" type="number" min="0.00" max="10000.00" step="0.01" placeholder="set the price"/>
+<input class="setPrice" ng-if="stillWaiting===0" ng-model="newPrice" value="{{selectedItem.price}}"  ng-change="updatePrice(newPrice,selectedItem.id)" type="number" min="0.00" max="10000.00" step="0.01" placeholder="set the price"/>
 
-    <li class="articles__list--item control-group" ng-repeat="product in productsUncompleted">
-      <label class="control control-checkbox">
-            <input type="checkbox"  data-id=""  ng-click="removeItem($index)"/>
-            <div class="control_indicator"></div>
-            <h3>{{product.name}}</h3>
-            <p>find {{product.name}} at <button ng-click="showMap(product.idRayon)" class="map__link" href="#" class="{{product.idRayon}}">{{product.categorieName}}</button></p>
-            <div class="popupPrice" data-id=""><h1>Set price</h1><input type="number" min="0.00" max="10000.00" step="0.01" /></div>
-      </label>
-    </li>
-  </ul>
+  <li class="articles__list--item control-group" ng-repeat="product in productsUncompleted">
+    <label class="control control-checkbox">
+          <input type="checkbox"  data-id=""  ng-click="removeItem($index)"/>
+          <div class="control_indicator"></div>
+          <h3>{{product.name}}</h3>
+          <p>find {{product.name}} at <button ng-click="showMap(product.idRayon)" class="map__link" href="#" class="{{product.idRayon}}">{{product.categorieName}}</button></p>
+          <div class="popupPrice" data-id=""><h1>Set price</h1><input type="number" min="0.00" max="10000.00" step="0.01" /></div>
+    </label>
+  </li>
+</ul>
 </div>
 <div class="container__currentList articles" ng-if="selectedItem" ng-app="show__list">
-  <p>Current Articles <span class="count">{{completed}}</span> &#9658;</p>
-  <ul class="articles__list">
-    <li class="articles__list--curent" ng-repeat="x in productsCompleted "><label class="control control-checkbox">
-        <p>{{x.name}}</p>
-            <input type="checkbox" checked="checked" />
-        <div class="control_indicator"></div>
-    </label></div></li>
-  </ul>
+<p>Current Articles <span class="count">{{completed}}</span> &#9658;</p>
+<ul class="articles__list">
+  <li class="articles__list--curent" ng-repeat="x in productsCompleted "><label class="control control-checkbox">
+      <p>{{x.name}}</p>
+          <input type="checkbox" checked="checked" />
+      <div class="control_indicator"></div>
+  </label></div></li>
+</ul>
 </div>
 <div class="map__rayon">
-  <svg ng-click="hideMap()" id="map__rayon--close" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>
-  <svg width="860px" height="411px" viewBox="0 0 860 411" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-      <!-- Generator: Sketch 3.8.1 (29687) - http://www.bohemiancoding.com/sketch -->
-      <title>map</title>
-      <desc>Created with Sketch.</desc>
-      <defs>
-          <rect id="path-1" x="0" y="0" width="27" height="178"></rect>
-          <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="27" height="178" fill="white">
-              <use xlink:href="#path-1"></use>
-          </mask>
-          <rect id="path-3" x="80" y="0" width="27" height="178"></rect>
-          <mask id="mask-4" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="27" height="178" fill="white">
-              <use xlink:href="#path-3"></use>
-          </mask>
-          <rect id="path-5" x="33" y="0" width="27" height="178"></rect>
-          <mask id="mask-6" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="27" height="178" fill="white">
-              <use xlink:href="#path-5"></use>
-          </mask>
-          <rect id="path-7" x="113" y="0" width="27" height="178"></rect>
-          <mask id="mask-8" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="27" height="178" fill="white">
-              <use xlink:href="#path-7"></use>
-          </mask>
-          <rect id="path-9" x="160" y="0" width="27" height="178"></rect>
-          <mask id="mask-10" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="27" height="178" fill="white">
-              <use xlink:href="#path-9"></use>
-          </mask>
-          <rect id="path-11" x="193" y="0" width="27" height="178"></rect>
-          <mask id="mask-12" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="27" height="178" fill="white">
-              <use xlink:href="#path-11"></use>
-          </mask>
-          <polyline id="path-13" points="364 4.26325641e-14 364 27 0.356723619 27 0.356723619 0 364 4.26325641e-14"></polyline>
-          <mask id="mask-14" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="363.643276" height="27" fill="white">
-              <use xlink:href="#path-13"></use>
-          </mask>
-          <polygon id="path-15" points="364 60 0.356723619 60 0.356723619 33 364 33"></polygon>
-          <mask id="mask-16" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="363.643276" height="27" fill="white">
-              <use xlink:href="#path-15"></use>
-          </mask>
-          <polyline id="path-17" points="700 4.26325641e-14 700 27 336.356724 27 336.356724 0 700 4.26325641e-14"></polyline>
-          <mask id="mask-18" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="363.643276" height="27" fill="white">
-              <use xlink:href="#path-17"></use>
-          </mask>
-          <polygon id="path-19" points="700 60 336.356724 60 336.356724 33 700 33"></polygon>
-          <mask id="mask-20" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="363.643276" height="27" fill="white">
-              <use xlink:href="#path-19"></use>
-          </mask>
-          <rect id="path-21" x="97.6432764" y="286.531157" width="27" height="220.286553"></rect>
-          <mask id="mask-22" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="27" height="220.286553" fill="white">
-              <use xlink:href="#path-21"></use>
-          </mask>
-          <polyline id="path-23" points="699.643276 350 699.643276 377 336 377 336 350 699.643276 350"></polyline>
-          <mask id="mask-24" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="363.643276" height="27" fill="white">
-              <use xlink:href="#path-23"></use>
-          </mask>
-          <polygon id="path-25" points="699.643276 410 336 410 336 383 699.643276 383"></polygon>
-          <mask id="mask-26" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="363.643276" height="27" fill="white">
-              <use xlink:href="#path-25"></use>
-          </mask>
-          <polyline id="path-27" points="699.643276 350 699.643276 377 336 377 336 350 699.643276 350"></polyline>
-          <mask id="mask-28" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="363.643276" height="27" fill="white">
-              <use xlink:href="#path-27"></use>
-          </mask>
-          <polygon id="path-29" points="699.643276 410 336 410 336 383 699.643276 383"></polygon>
-          <mask id="mask-30" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="363.643276" height="27" fill="white">
-              <use xlink:href="#path-29"></use>
-          </mask>
-          <rect id="path-31" x="97.3567236" y="143.387881" width="27" height="220.286553"></rect>
-          <mask id="mask-32" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="27" height="220.286553" fill="white">
-              <use xlink:href="#path-31"></use>
-          </mask>
-          <polyline id="path-33" points="700 240 700 267 336.356724 267 336.356724 240 700 240"></polyline>
-          <mask id="mask-34" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="363.643276" height="27" fill="white">
-              <use xlink:href="#path-33"></use>
-          </mask>
-          <rect id="path-35" x="97.6432764" y="253.531157" width="27" height="220.286553"></rect>
-          <mask id="mask-36" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="27" height="220.286553" fill="white">
-              <use xlink:href="#path-35"></use>
-          </mask>
-          <rect id="path-37" x="97.6432764" y="176.356724" width="27" height="220.286553"></rect>
-          <mask id="mask-38" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="27" height="220.286553" fill="white">
-              <use xlink:href="#path-37"></use>
-          </mask>
-          <polygon id="path-39" points="700 300 336.356724 300 336.356724 273 700 273"></polygon>
-          <mask id="mask-40" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="363.643276" height="27" fill="white">
-              <use xlink:href="#path-39"></use>
-          </mask>
-          <rect id="path-41" x="0" y="0" width="27" height="410.174433"></rect>
-          <mask id="mask-42" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="27" height="410.174433" fill="white">
-              <use xlink:href="#path-41"></use>
-          </mask>
-          <rect id="path-43" x="33" y="0" width="27" height="410.174433"></rect>
-          <mask id="mask-44" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="27" height="410.174433" fill="white">
-              <use xlink:href="#path-43"></use>
-          </mask>
-      </defs>
-      <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-          <g id="map" stroke-width="2" stroke="#000000">
-              <g id="rayon__vege">
-                  <use mask="url(#mask-2)" xlink:href="#path-1"></use>
-                  <use id="rayon_vege-copy" mask="url(#mask-4)" xlink:href="#path-3"></use>
-                  <use mask="url(#mask-6)" xlink:href="#path-5"></use>
-                  <use id="rayon_vege-copy-2" mask="url(#mask-8)" xlink:href="#path-7"></use>
-                  <use id="rayon_vege-copy" mask="url(#mask-10)" xlink:href="#path-9"></use>
-                  <use id="rayon_vege-copy-2" mask="url(#mask-12)" xlink:href="#path-11"></use>
-              </g>
-              <g id="rayon__fish" transform="translate(336.000000, 120.000000)">
-                  <use id="rayon_vege-copy-6" mask="url(#mask-14)" xlink:href="#path-13"></use>
-                  <use id="rayon_vege-copy-7" mask="url(#mask-16)" xlink:href="#path-15"></use>
-              </g>
-              <g id="other">
-                  <use id="rayon_vege-copy-6" mask="url(#mask-18)" xlink:href="#path-17"></use>
-                  <use id="rayon_vege-copy-7" mask="url(#mask-20)" xlink:href="#path-19"></use>
-                  <use id="rayon_vege-copy-5" mask="url(#mask-22)" transform="translate(111.143276, 396.674433) rotate(-270.000000) translate(-111.143276, -396.674433) " xlink:href="#path-21"></use>
-                  <use id="rayon_vege-copy-6" mask="url(#mask-24)" xlink:href="#path-23"></use>
-                  <use id="rayon_vege-copy-7" mask="url(#mask-26)" xlink:href="#path-25"></use>
-                  <use id="rayon_vege-copy-6" mask="url(#mask-28)" xlink:href="#path-27"></use>
-                  <use id="rayon_vege-copy-7" mask="url(#mask-30)" xlink:href="#path-29"></use>
-                  <use id="rayon_vege" mask="url(#mask-32)" transform="translate(110.856724, 253.531157) rotate(-270.000000) translate(-110.856724, -253.531157) " xlink:href="#path-31"></use>
-                  <use id="rayon_vege-copy-6" mask="url(#mask-34)" xlink:href="#path-33"></use>
-                  <use id="rayon_vege-copy-4" mask="url(#mask-36)" transform="translate(111.143276, 363.674433) rotate(-270.000000) translate(-111.143276, -363.674433) " xlink:href="#path-35"></use>
-                  <use id="rayon_vege-copy-3" mask="url(#mask-38)" transform="translate(111.143276, 286.500000) rotate(-270.000000) translate(-111.143276, -286.500000) " xlink:href="#path-37"></use>
-                  <use id="rayon_vege-copy-7" mask="url(#mask-40)" xlink:href="#path-39"></use>
-              </g>
-              <g id="rayon__meats" transform="translate(800.000000, 0.000000)">
-                  <use id="rayon_vege-copy" mask="url(#mask-42)" xlink:href="#path-41"></use>
-                  <use id="rayon_vege-copy-2" mask="url(#mask-44)" xlink:href="#path-43"></use>
-              </g>
-          </g>
-      </g>
-  </svg>
+<svg ng-click="hideMap()" id="map__rayon--close" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/></svg>
+<svg width="860px" height="411px" viewBox="0 0 860 411" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.8.1 (29687) - http://www.bohemiancoding.com/sketch -->
+    <title>map</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="27" height="178"></rect>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="27" height="178" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+        <rect id="path-3" x="80" y="0" width="27" height="178"></rect>
+        <mask id="mask-4" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="27" height="178" fill="white">
+            <use xlink:href="#path-3"></use>
+        </mask>
+        <rect id="path-5" x="33" y="0" width="27" height="178"></rect>
+        <mask id="mask-6" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="27" height="178" fill="white">
+            <use xlink:href="#path-5"></use>
+        </mask>
+        <rect id="path-7" x="113" y="0" width="27" height="178"></rect>
+        <mask id="mask-8" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="27" height="178" fill="white">
+            <use xlink:href="#path-7"></use>
+        </mask>
+        <rect id="path-9" x="160" y="0" width="27" height="178"></rect>
+        <mask id="mask-10" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="27" height="178" fill="white">
+            <use xlink:href="#path-9"></use>
+        </mask>
+        <rect id="path-11" x="193" y="0" width="27" height="178"></rect>
+        <mask id="mask-12" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="27" height="178" fill="white">
+            <use xlink:href="#path-11"></use>
+        </mask>
+        <polyline id="path-13" points="364 4.26325641e-14 364 27 0.356723619 27 0.356723619 0 364 4.26325641e-14"></polyline>
+        <mask id="mask-14" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="363.643276" height="27" fill="white">
+            <use xlink:href="#path-13"></use>
+        </mask>
+        <polygon id="path-15" points="364 60 0.356723619 60 0.356723619 33 364 33"></polygon>
+        <mask id="mask-16" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="363.643276" height="27" fill="white">
+            <use xlink:href="#path-15"></use>
+        </mask>
+        <polyline id="path-17" points="700 4.26325641e-14 700 27 336.356724 27 336.356724 0 700 4.26325641e-14"></polyline>
+        <mask id="mask-18" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="363.643276" height="27" fill="white">
+            <use xlink:href="#path-17"></use>
+        </mask>
+        <polygon id="path-19" points="700 60 336.356724 60 336.356724 33 700 33"></polygon>
+        <mask id="mask-20" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="363.643276" height="27" fill="white">
+            <use xlink:href="#path-19"></use>
+        </mask>
+        <rect id="path-21" x="97.6432764" y="286.531157" width="27" height="220.286553"></rect>
+        <mask id="mask-22" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="27" height="220.286553" fill="white">
+            <use xlink:href="#path-21"></use>
+        </mask>
+        <polyline id="path-23" points="699.643276 350 699.643276 377 336 377 336 350 699.643276 350"></polyline>
+        <mask id="mask-24" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="363.643276" height="27" fill="white">
+            <use xlink:href="#path-23"></use>
+        </mask>
+        <polygon id="path-25" points="699.643276 410 336 410 336 383 699.643276 383"></polygon>
+        <mask id="mask-26" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="363.643276" height="27" fill="white">
+            <use xlink:href="#path-25"></use>
+        </mask>
+        <polyline id="path-27" points="699.643276 350 699.643276 377 336 377 336 350 699.643276 350"></polyline>
+        <mask id="mask-28" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="363.643276" height="27" fill="white">
+            <use xlink:href="#path-27"></use>
+        </mask>
+        <polygon id="path-29" points="699.643276 410 336 410 336 383 699.643276 383"></polygon>
+        <mask id="mask-30" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="363.643276" height="27" fill="white">
+            <use xlink:href="#path-29"></use>
+        </mask>
+        <rect id="path-31" x="97.3567236" y="143.387881" width="27" height="220.286553"></rect>
+        <mask id="mask-32" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="27" height="220.286553" fill="white">
+            <use xlink:href="#path-31"></use>
+        </mask>
+        <polyline id="path-33" points="700 240 700 267 336.356724 267 336.356724 240 700 240"></polyline>
+        <mask id="mask-34" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="363.643276" height="27" fill="white">
+            <use xlink:href="#path-33"></use>
+        </mask>
+        <rect id="path-35" x="97.6432764" y="253.531157" width="27" height="220.286553"></rect>
+        <mask id="mask-36" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="27" height="220.286553" fill="white">
+            <use xlink:href="#path-35"></use>
+        </mask>
+        <rect id="path-37" x="97.6432764" y="176.356724" width="27" height="220.286553"></rect>
+        <mask id="mask-38" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="27" height="220.286553" fill="white">
+            <use xlink:href="#path-37"></use>
+        </mask>
+        <polygon id="path-39" points="700 300 336.356724 300 336.356724 273 700 273"></polygon>
+        <mask id="mask-40" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="363.643276" height="27" fill="white">
+            <use xlink:href="#path-39"></use>
+        </mask>
+        <rect id="path-41" x="0" y="0" width="27" height="410.174433"></rect>
+        <mask id="mask-42" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="27" height="410.174433" fill="white">
+            <use xlink:href="#path-41"></use>
+        </mask>
+        <rect id="path-43" x="33" y="0" width="27" height="410.174433"></rect>
+        <mask id="mask-44" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="27" height="410.174433" fill="white">
+            <use xlink:href="#path-43"></use>
+        </mask>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="map" stroke-width="2" stroke="#000000">
+            <g id="rayon__vege">
+                <use mask="url(#mask-2)" xlink:href="#path-1"></use>
+                <use id="rayon_vege-copy" mask="url(#mask-4)" xlink:href="#path-3"></use>
+                <use mask="url(#mask-6)" xlink:href="#path-5"></use>
+                <use id="rayon_vege-copy-2" mask="url(#mask-8)" xlink:href="#path-7"></use>
+                <use id="rayon_vege-copy" mask="url(#mask-10)" xlink:href="#path-9"></use>
+                <use id="rayon_vege-copy-2" mask="url(#mask-12)" xlink:href="#path-11"></use>
+            </g>
+            <g id="rayon__fish" transform="translate(336.000000, 120.000000)">
+                <use id="rayon_vege-copy-6" mask="url(#mask-14)" xlink:href="#path-13"></use>
+                <use id="rayon_vege-copy-7" mask="url(#mask-16)" xlink:href="#path-15"></use>
+            </g>
+            <g id="other">
+                <use id="rayon_vege-copy-6" mask="url(#mask-18)" xlink:href="#path-17"></use>
+                <use id="rayon_vege-copy-7" mask="url(#mask-20)" xlink:href="#path-19"></use>
+                <use id="rayon_vege-copy-5" mask="url(#mask-22)" transform="translate(111.143276, 396.674433) rotate(-270.000000) translate(-111.143276, -396.674433) " xlink:href="#path-21"></use>
+                <use id="rayon_vege-copy-6" mask="url(#mask-24)" xlink:href="#path-23"></use>
+                <use id="rayon_vege-copy-7" mask="url(#mask-26)" xlink:href="#path-25"></use>
+                <use id="rayon_vege-copy-6" mask="url(#mask-28)" xlink:href="#path-27"></use>
+                <use id="rayon_vege-copy-7" mask="url(#mask-30)" xlink:href="#path-29"></use>
+                <use id="rayon_vege" mask="url(#mask-32)" transform="translate(110.856724, 253.531157) rotate(-270.000000) translate(-110.856724, -253.531157) " xlink:href="#path-31"></use>
+                <use id="rayon_vege-copy-6" mask="url(#mask-34)" xlink:href="#path-33"></use>
+                <use id="rayon_vege-copy-4" mask="url(#mask-36)" transform="translate(111.143276, 363.674433) rotate(-270.000000) translate(-111.143276, -363.674433) " xlink:href="#path-35"></use>
+                <use id="rayon_vege-copy-3" mask="url(#mask-38)" transform="translate(111.143276, 286.500000) rotate(-270.000000) translate(-111.143276, -286.500000) " xlink:href="#path-37"></use>
+                <use id="rayon_vege-copy-7" mask="url(#mask-40)" xlink:href="#path-39"></use>
+            </g>
+            <g id="rayon__meats" transform="translate(800.000000, 0.000000)">
+                <use id="rayon_vege-copy" mask="url(#mask-42)" xlink:href="#path-41"></use>
+                <use id="rayon_vege-copy-2" mask="url(#mask-44)" xlink:href="#path-43"></use>
+            </g>
+        </g>
+    </g>
+</svg>
 </div>
 </div>

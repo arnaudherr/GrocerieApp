@@ -75,7 +75,7 @@ app.controller("list__controller", function($scope, $http) {
 	}
 	//call to $scope.loadData()
 	$scope.loadData();
-
+	$scope.hideCategorieSelector=false;
   $scope.verificationExist=function(value){
     $http.get('php/allArticles.php', {
       params: {
@@ -84,19 +84,39 @@ app.controller("list__controller", function($scope, $http) {
     }).then(function(response) {
       console.log(response.data[0].name)
       if (response.data[0].name!=null){
-        $('#insert').hide();
-
+        //$('#insert').hide();
         //Insert into db onli in listProduit
+				$scope.hideCategorieSelector=true;
+
+				$scope.catid=response.data[0].rayonId;
+				$scope.exisitngProductId=(response.data[0].id)
+
       }
       else {
-        $('#insert').show();
+				$scope.hideCategorieSelector=false;
+				$scope.exisitngProductId=undefined;
         //Insert into db  in listProduit and Produits
 
       }
     })
   }
-  $scope.insertNewItemInList=function(idList,productName,rayon){
-    console.log(idList +" "+ productName +" "+ rayon);
+  $scope.insertNewItemInList=function(idList,productName,productId,rayon){
+
+    console.log(idList +" "+ productName +" "+productId+" "+ rayon);
+		$http.get('php/insertNewItem.php', {
+			params: {
+				idList: idList,
+				productName:productName,
+				productId:productId,
+				rayon:rayon
+
+			}
+		}).then(function(response) {
+				console.log(response);
+
+				$scope.loadData();
+
+		})
 
   }
   $scope.getCatId=function(catId){

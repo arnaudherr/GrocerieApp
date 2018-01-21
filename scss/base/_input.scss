@@ -219,35 +219,12 @@ input:focus,select:focus {
   width: 100%;
   transition: all .2s ease-in-out;
 }
-#add__item:focus{
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  border-top-left-radius: 2em;
-  border-top-right-radius: 2em;
 
-}
 #select_list{
   border-bottom-right-radius: 0;
   border-top-right-radius: 0;
   border-right: none;
 
-}
-
- @-webkit-keyframes showIn {
-  0%   { opacity: 0; transform: translateY(100%);}
-  100% { opacity: 1; transform: translateY(0%);}
-}
-@-moz-keyframes showIn {
-  0%   { opacity: 0; transform: translateY(100%);}
-  100% { opacity: 1; transform: translateY(0%);}
-}
-@-o-keyframes showIn {
-  0%   { opacity: 0; transform: translateY(100%);}
-  100% { opacity: 1; transform: translateY(0%);}
-}
-@keyframes showIn {
-  0%   { opacity: 0; transform: translateY(100%);}
-  100% { opacity: 1; transform: translateY(0%);}
 }
 
 /*

@@ -215,26 +215,7 @@ header{
 
 }
 
- @-webkit-keyframes cligno {
-  0%   { opacity: .5;}
-  50% { opacity: 1;}
-  100% { opacity: 1;}
-}
-@-moz-keyframes cligno {
-  0%   { opacity: .5;}
-  50% { opacity: 1;}
-  100% { opacity: 1;}
-}
-@-o-keyframes cligno {
-  0%   { opacity: .5;}
-  50% { opacity: 1;}
-  100% { opacity: 1;}
-}
-@keyframes cligno {
-  0%   { opacity: .5;}
-  50% { opacity: 1;}
-  100% { opacity: 1;}
-}
+
 .opened{
  -webkit-animation: showIn .4s ease-in-out forwards; /* Safari 4+ */
   -moz-animation:    showIn .4s ease-in-out forwards; /* Fx 5+ */
@@ -243,22 +224,7 @@ header{
 
 }
 
- @-webkit-keyframes showIn {
-  0%   { opacity: 0; display: block; transform: translateY(100%);}
-  100% { opacity: 1; display: block; transform: translateY(0%);}
-}
-@-moz-keyframes showIn {
-  0%   { opacity: 0; display: block; transform: translateY(100%);}
-  100% { opacity: 1; display: block; transform: translateY(0%);}
-}
-@-o-keyframes showIn {
-  0%   { opacity: 0; display: block; transform: translateY(100%);}
-  100% { opacity: 1; display: block; transform: translateY(0%);}
-}
-@keyframes showIn {
-  0%   { opacity: 0; display: block; transform: translateY(100%);}
-  100% { opacity: 1; display: block; transform: translateY(0%);}
-}
+
 footer{
   width: 100%;
   display: flex;
@@ -272,7 +238,8 @@ footer{
   left: 0;
   a {
     width: 100%;
-    padding: 1em;
+
+    padding: .8em;
 
     border-right: solid 1px $main-color;
     text-align: center;
@@ -282,13 +249,16 @@ footer{
     font-weight: lighter;
     text-transform: uppercase;
     transition: all .1s ease-in;
+    svg {
+      max-width: 30px;
+    }
   }
 
   :hover{
     background:$green__dark-color;
   }
   :hover svg{
-    transform: scale(1.6);
+    transform: scale(1.2);
   }
   :last-child{
     border:none;
